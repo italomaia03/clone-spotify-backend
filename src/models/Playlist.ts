@@ -1,4 +1,4 @@
-import { DataTypes, Deferrable } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../database/ConnectDB";
 
 export const Playlist = sequelize.define(
