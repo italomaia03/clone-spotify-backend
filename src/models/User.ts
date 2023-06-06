@@ -2,36 +2,49 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/ConnectDB";
 
 export const User = sequelize.define(
-    "users",
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            primaryKey: true,
-        },
-        email: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            unique: true,
-        },
-        password: {
-            type: DataTypes.STRING(64),
-            allowNull: false,
-        },
-        username: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            unique: true,
-        },
-        date_of_birth: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-        },
-        gender: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
+  "users",
+  {
+    email: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+        notEmpty: true,
+      },
     },
-    { timestamps: false }
+    password: {
+      type: DataTypes.STRING(64),
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [6, 64],
+      },
+    },
+    username: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    date_of_birth: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        isBefore: new Date().toDateString(),
+      },
+    },
+    gender: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isIn: [["m", "f", "nb", "o", "pns"]],
+      },
+    },
+  },
+  { timestamps: false }
 );
