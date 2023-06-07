@@ -2,7 +2,9 @@ import express, { Express } from "express";
 import { router } from "./routes/Router";
 import { sequelize } from "./database/ConnectDB";
 import { auth } from "./routes/Auth";
-import "dotenv/config";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const app: Express = express();
 const connectDB = sequelize;
