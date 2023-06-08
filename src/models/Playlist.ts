@@ -1,8 +1,19 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, ModelDefined, Optional } from "sequelize";
 import { sequelize } from "../database/ConnectDB";
 
-export const Playlist = sequelize.define(
-    "playlists",
+interface PlaylistAttributes {
+    id: number;
+    name: string;
+    duration: string;
+}
+
+type PlaylistCreationAttributes = Optional<PlaylistAttributes, "id">;
+
+export const Playlist: ModelDefined<
+    PlaylistAttributes,
+    PlaylistCreationAttributes
+> = sequelize.define(
+    "Playlist",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -14,9 +25,9 @@ export const Playlist = sequelize.define(
             allowNull: false,
         },
         duration: {
-            type: DataTypes.TIME,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
     },
-    { timestamps: false }
+    { tableName: "playlist", timestamps: false }
 );
