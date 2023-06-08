@@ -1,5 +1,7 @@
 import { DataTypes, ModelDefined, Optional } from "sequelize";
 import { sequelize } from "../database/ConnectDB";
+import { Playlist } from "./Playlist";
+import { SongPlaylist } from "./SongPlaylist";
 
 interface SongAttributes {
     id: number;
@@ -37,3 +39,4 @@ export const Song: ModelDefined<SongAttributes, SongCretionAttributes> =
         },
         { tableName: "songs", timestamps: false }
     );
+Song.belongsToMany(Playlist, { through: SongPlaylist });

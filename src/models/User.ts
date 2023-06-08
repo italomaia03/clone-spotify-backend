@@ -6,6 +6,7 @@ import {
     Model,
 } from "sequelize";
 import { sequelize } from "../database/ConnectDB";
+import { Playlist } from "./Playlist";
 
 export class User extends Model<
     InferAttributes<User>,
@@ -70,3 +71,6 @@ User.init(
     },
     { tableName: "users", sequelize, timestamps: false }
 );
+User.hasMany(Playlist, {
+    foreignKey: "userID",
+});
