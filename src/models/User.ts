@@ -1,76 +1,60 @@
-import {
-    CreationOptional,
-    DataTypes,
-    InferAttributes,
-    InferCreationAttributes,
-    Model,
-} from "sequelize";
-import { sequelize } from "../database/ConnectDB";
-import { Playlist } from "./Playlist";
+import { DataTypes } from "sequelize";
+import { Model, Column, Table, HasMany } from "sequelize-typescript";
+import Playlist from "./Playlist";
 
-export class User extends Model<
-    InferAttributes<User>,
-    InferCreationAttributes<User>
-> {
-    declare id: CreationOptional<number>;
-    declare email: string;
-    declare password: string;
-    declare username: string;
-    declare date_of_birth: Date;
-    declare gender: string;
+@Table({ timestamps: false, tableName: "users" })
+export default class User extends Model<User> {
+    @Column({
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true,
+            notEmpty: true,
+        },
+    })
+    email!: string;
+
+    @Column({
+        type: DataTypes.STRING(64),
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+            len: [6, 64],
+        },
+    })
+    password!: string;
+
+    @Column({
+        type: DataTypes.TEXT,
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true,
+        },
+    })
+    username!: string;
+
+    @Column({
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+        validate: {
+            isDate: true,
+            isBefore: new Date().toDateString(),
+        },
+    })
+    date_of_birth!: Date;
+
+    @Column({
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+            isIn: [["m", "f", "nb", "o", "pns"]],
+        },
+    })
+    gender!: string;
+
+    @HasMany(() => Playlist)
+    playlists?: Playlist[];
 }
-
-User.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        email: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            unique: true,
-            validate: {
-                isEmail: true,
-                notEmpty: true,
-            },
-        },
-        password: {
-            type: DataTypes.STRING(64),
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-                len: [6, 64],
-            },
-        },
-        username: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            unique: true,
-            validate: {
-                notEmpty: true,
-            },
-        },
-        date_of_birth: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
-            validate: {
-                isDate: true,
-                isBefore: new Date().toDateString(),
-            },
-        },
-        gender: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-                isIn: [["m", "f", "nb", "o", "pns"]],
-            },
-        },
-    },
-    { tableName: "users", sequelize, timestamps: false }
-);
-User.hasMany(Playlist, {
-    foreignKey: "userID",
-});

@@ -1,29 +1,19 @@
-import { DataTypes, ModelDefined } from "sequelize";
-import { sequelize } from "../database/ConnectDB";
-import { Song } from "./Song";
-import { Playlist } from "./Playlist";
+import { DataTypes } from "sequelize";
+import { Model, Table, Column, ForeignKey } from "sequelize-typescript";
+import Song from "./Song";
+import Playlist from "./Playlist";
 
-interface SongPlaylistAttributes {
-    songID: number;
-    playlistID: number;
+@Table({ tableName: "songs_playlists", timestamps: false })
+export default class SongPlaylist extends Model {
+    @Column({
+        type: DataTypes.INTEGER,
+    })
+    @ForeignKey(() => Song)
+    songID!: number;
+
+    @Column({
+        type: DataTypes.INTEGER,
+    })
+    @ForeignKey(() => Playlist)
+    playlistID!: number;
 }
-
-export const SongPlaylist: ModelDefined<
-    SongPlaylistAttributes,
-    SongPlaylistAttributes
-> = sequelize.define("SongPlaylist", {
-    songID: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        references: {
-            model: Song,
-            key: "id",
-        },
-    },
-    playlistID: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        references: {
-            model: Playlist,
-            key: "id",
-        },
-    },
-});

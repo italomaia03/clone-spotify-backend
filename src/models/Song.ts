@@ -1,42 +1,34 @@
-import { DataTypes, ModelDefined, Optional } from "sequelize";
-import { sequelize } from "../database/ConnectDB";
-import { Playlist } from "./Playlist";
-import { SongPlaylist } from "./SongPlaylist";
+import { DataTypes } from "sequelize";
+import { Model, Table, Column, BelongsToMany } from "sequelize-typescript";
+import Playlist from "./Playlist";
+import SongPlaylist from "./SongPlaylist";
 
-interface SongAttributes {
-    id: number;
-    name: string;
-    duration: string;
+@Table({ tableName: "songs", timestamps: false })
+export default class Song extends Model<Song> {
+    @Column({
+        type: DataTypes.TEXT,
+        allowNull: false,
+    })
+    name!: string;
+
+    @Column({
+        type: DataTypes.TIME,
+        allowNull: false,
+    })
+    duration!: number;
+
+    @Column({
+        type: DataTypes.TEXT,
+        allowNull: false,
+    })
+    author!: string;
+
+    @Column({
+        type: DataTypes.TEXT,
+        allowNull: false,
+    })
+    album!: string;
+
+    @BelongsToMany(() => Playlist, () => SongPlaylist)
+    playlists?: Array<Playlist & { SongPlaylist: SongPlaylist }>;
 }
-
-type SongCretionAttributes = Optional<SongAttributes, "id">;
-
-export const Song: ModelDefined<SongAttributes, SongCretionAttributes> =
-    sequelize.define(
-        "Song",
-        {
-            id: {
-                type: DataTypes.INTEGER,
-                autoIncrement: true,
-                primaryKey: true,
-            },
-            name: {
-                type: DataTypes.TEXT,
-                allowNull: false,
-            },
-            duration: {
-                type: DataTypes.TIME,
-                allowNull: false,
-            },
-            author: {
-                type: DataTypes.TEXT,
-                allowNull: false,
-            },
-            album: {
-                type: DataTypes.TEXT,
-                allowNull: false,
-            },
-        },
-        { tableName: "songs", timestamps: false }
-    );
-Song.belongsToMany(Playlist, { through: SongPlaylist });
