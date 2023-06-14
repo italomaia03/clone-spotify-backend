@@ -6,6 +6,7 @@ import {
     BelongsTo,
     BelongsToMany,
     ForeignKey,
+    Default,
 } from "sequelize-typescript";
 import Song from "./Song";
 import User from "./User";
@@ -19,10 +20,11 @@ export default class Playlist extends Model<Playlist> {
     })
     name!: string;
 
+    @Default(0)
     @Column({
-        type: DataTypes.TEXT,
+        type: DataTypes.NUMBER,
     })
-    duration?: number;
+    duration!: number;
 
     @BelongsTo(() => User)
     user!: User;

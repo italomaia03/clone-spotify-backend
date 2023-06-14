@@ -1,4 +1,6 @@
-export class BadRequestError extends Error {
+import { CustomApiError } from "./CustomApiError";
+
+export class BadRequestError extends CustomApiError {
     statusCode: number;
 
     constructor(message: string) {

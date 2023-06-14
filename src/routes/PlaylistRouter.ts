@@ -11,11 +11,11 @@ import { authMiddleware } from "../middleware/authMiddleware";
 const playlistRouter: Router = Router();
 
 playlistRouter
-    .route("/{:userId}")
+    .route("/playlists")
     .get(authMiddleware, getAllPlaylists)
     .post(authMiddleware, createPlaylist);
 playlistRouter
-    .route("/{:userId}/playlist/{:playlistId}")
+    .route("/playlists/:playlistId")
     .get(authMiddleware, getPlaylistById)
     .patch(authMiddleware, updatePlaylist)
     .delete(authMiddleware, deletePlaylist);

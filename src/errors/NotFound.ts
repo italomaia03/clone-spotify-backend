@@ -1,4 +1,6 @@
-export class NotFoundError extends Error {
+import { CustomApiError } from "./CustomApiError";
+
+export class NotFoundError extends CustomApiError {
     statusCode: number;
 
     constructor(message: string) {

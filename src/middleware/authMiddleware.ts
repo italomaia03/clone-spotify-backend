@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { UnauthenticatedError } from "../errors/";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
+import { verifyToken } from "../utils";
 
 async function authMiddleware(
     req: Request,
@@ -15,11 +16,8 @@ async function authMiddleware(
 
     const token: string = authHeader!.split(" ")[1];
     try {
-        const decodedToken = jwt.verify(
-            token,
-            process.env.JWT_SECRET as string
-        );
-        req.user = { decodedToken };
+        const decodedToken = verifyToken(token);
+        req.user = { ...(decodedToken as JwtPayload) };
 
         next();
     } catch (error) {
