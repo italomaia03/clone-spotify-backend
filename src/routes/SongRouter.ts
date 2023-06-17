@@ -1,8 +1,17 @@
 import { Router } from "express";
-import { getAllSongs } from "../controllers/songController";
+import {
+    addSongToPlaylist,
+    createSong,
+    getAllSongs,
+} from "../controllers/songController";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const songRouter: Router = Router();
 
-songRouter.route("/songs").get(getAllSongs);
+songRouter
+    .route("/songs")
+    .get(getAllSongs)
+    .post(authMiddleware, addSongToPlaylist);
+songRouter.route("/songs/database").post(authMiddleware, createSong);
 
 export { songRouter };

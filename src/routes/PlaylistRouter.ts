@@ -4,6 +4,7 @@ import {
     deletePlaylist,
     getAllPlaylists,
     getPlaylistById,
+    removeSongFromPlaylist,
     updatePlaylist,
 } from "../controllers/playlistController";
 import { authMiddleware } from "../middleware/authMiddleware";
@@ -15,9 +16,13 @@ playlistRouter
     .get(authMiddleware, getAllPlaylists)
     .post(authMiddleware, createPlaylist);
 playlistRouter
-    .route("/playlists/:playlistId")
+    .route("/playlists/:id")
     .get(authMiddleware, getPlaylistById)
     .patch(authMiddleware, updatePlaylist)
     .delete(authMiddleware, deletePlaylist);
+
+playlistRouter
+    .route("/playlists/:playlistId/songs/:songId")
+    .delete(authMiddleware, removeSongFromPlaylist);
 
 export { playlistRouter };
