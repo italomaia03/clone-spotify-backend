@@ -25,6 +25,7 @@ async function updateUser(req: Request, res: Response) {
 }
 async function deleteUser(req: Request, res: Response) {
     const { userId } = req.user as JwtPayload;
+    await Playlist.destroy({ where: { userId: userId } });
     await User.destroy({
         where: { id: userId },
     });
