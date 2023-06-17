@@ -7,6 +7,7 @@ import * as dotenv from "dotenv";
 import { playlistRouter } from "./routes/PlaylistRouter";
 import { songRouter } from "./routes/SongRouter";
 import { errorHandler } from "./middleware/errorHandler";
+// import path from "path";
 
 dotenv.config({});
 
@@ -14,7 +15,8 @@ const app: Express = express();
 const connectDB = sequelize;
 // middlewares
 app.use(express.json());
-app.use("/", auth);
+// app.use(express.static(path.resolve(__dirname, "public")));
+app.use("/api/v1/", auth);
 app.use("/api/v1/", userRouter);
 app.use("/api/v1/", songRouter);
 app.use("/api/v1/", playlistRouter);
