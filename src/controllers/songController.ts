@@ -1,10 +1,21 @@
 import { Request, Response } from "express";
 import Song from "../models/Song";
 import { StatusCodes } from "http-status-codes";
+import Playlist from "../models/Playlist";
+import { NotFoundError } from "../errors";
 
 async function getAllSongs(_req: Request, res: Response) {
     const songs = await Song.findAll();
     res.status(StatusCodes.OK).json(songs);
+}
+
+async function createSong(req: Request, res: Response) {
+    const song: Song = req.body as Song;
+    await Song.create(song);
+
+    res.status(StatusCodes.CREATED).json({
+        msg: `Song ${song.name} has been added to database.`,
+    });
 }
 
 async function getSongById(req: Request, res: Response) {
@@ -28,4 +39,32 @@ async function deleteSong(req: Request, res: Response) {
     res.status(StatusCodes.OK).json({ msg: "Deleted" });
 }
 
-export { getAllSongs, updateSong, deleteSong, getSongById };
+async function addSongToPlaylist(req: Request, res: Response) {
+    const { songId, playlistId } = req.body;
+    const desiredPlaylist = await Playlist.findOne({
+        where: { id: playlistId },
+    });
+    const desiredSong = await Song.findOne({
+        where: { id: songId },
+    });
+    if (!desiredSong) {
+        throw new NotFoundError(`Song ${songId} does not exist`);
+    }
+    if (!desiredPlaylist) {
+        throw new NotFoundError(`Playlist ${playlistId} does not exist`);
+    }
+    desiredPlaylist.$add("song", desiredSong!);
+
+    res.status(StatusCodes.CREATED).json({
+        msg: `${desiredSong.name} has been added to ${desiredPlaylist.name}`,
+    });
+}
+
+export {
+    getAllSongs,
+    createSong,
+    updateSong,
+    deleteSong,
+    getSongById,
+    addSongToPlaylist,
+};
