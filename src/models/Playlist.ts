@@ -17,19 +17,29 @@ export default class Playlist extends Model<Playlist> {
     @Column({
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+            notNull: {
+                msg: "Playlist name must be provided.",
+            },
+            notEmpty: {
+                msg: "Playlist name can not be an empty string.",
+            },
+        },
     })
     name!: string;
 
-    @Default(0)
     @Column({
         type: DataTypes.NUMBER,
+        validate: {
+            notNull: false,
+            notEmpty: false,
+        },
     })
-    duration!: number;
+    description?: string;
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, "userId")
     user!: User;
 
-    @Column({ type: DataTypes.INTEGER })
     @ForeignKey(() => User)
     userId!: number;
 

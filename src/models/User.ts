@@ -9,8 +9,15 @@ export default class User extends Model<User> {
         allowNull: false,
         unique: true,
         validate: {
-            isEmail: true,
-            notEmpty: true,
+            isEmail: {
+                msg: "Please, provide a valid email.",
+            },
+            notEmpty: {
+                msg: "Email can not be an empty field.",
+            },
+            notNull: {
+                msg: "Email must be provided.",
+            },
         },
     })
     email!: string;
@@ -19,8 +26,13 @@ export default class User extends Model<User> {
         type: DataTypes.STRING(64),
         allowNull: false,
         validate: {
-            notEmpty: true,
             len: [6, 64],
+            notEmpty: {
+                msg: "Password can not be an empty field.",
+            },
+            notNull: {
+                msg: "Password must be provided.",
+            },
         },
     })
     password!: string;
@@ -30,7 +42,12 @@ export default class User extends Model<User> {
         allowNull: false,
         unique: true,
         validate: {
-            notEmpty: true,
+            notEmpty: {
+                msg: "Username can not be an empty field.",
+            },
+            notNull: {
+                msg: "Username must be provided.",
+            },
         },
     })
     username!: string;
@@ -41,6 +58,12 @@ export default class User extends Model<User> {
         validate: {
             isDate: true,
             isBefore: new Date().toDateString(),
+            notEmpty: {
+                msg: "Date of birth can not be an empty field.",
+            },
+            notNull: {
+                msg: "Date of birth must be provided.",
+            },
         },
     })
     date_of_birth!: Date;
@@ -49,7 +72,12 @@ export default class User extends Model<User> {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-            notEmpty: true,
+            notEmpty: {
+                msg: "Gender can not be an empty field.",
+            },
+            notNull: {
+                msg: "Gender must be provided.",
+            },
             isIn: [["m", "f", "nb", "o", "pns"]],
         },
     })
