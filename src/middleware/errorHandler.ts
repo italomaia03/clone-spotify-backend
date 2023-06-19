@@ -10,11 +10,13 @@ export function errorHandler(
     _next: NextFunction
 ) {
     if (err instanceof CustomApiError) {
-        res.status(err.statusCode!).json({ message: err.message });
+        return res.status(err.statusCode!).json({ message: err.message });
     }
     if (err instanceof ValidationError) {
-        res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
+        return res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
     }
 
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
+    return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: err.message });
 }

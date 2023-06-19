@@ -18,7 +18,7 @@ playlistRouter
 playlistRouter
     .route("/playlists/:id")
     .get(authMiddleware, getPlaylistById)
-    .patch(authMiddleware, updatePlaylist)
+    .put(authMiddleware, updatePlaylist)
     .delete(authMiddleware, deletePlaylist);
 
 playlistRouter
