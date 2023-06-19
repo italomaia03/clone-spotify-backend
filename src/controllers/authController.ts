@@ -3,7 +3,7 @@ import User from "../models/User";
 import { BadRequestError, NotFoundError } from "../errors";
 import { StatusCodes } from "http-status-codes";
 import createTokenUser from "../utils/createTokenUser";
-import { createToken } from "../utils";
+import { attachCookieToResponse } from "../utils";
 
 async function loginUser(req: Request, res: Response) {
     const { username, password } = req.body;
@@ -22,10 +22,10 @@ async function loginUser(req: Request, res: Response) {
     }
 
     const tokenUser = createTokenUser(user);
-    const token = createToken(tokenUser);
+
+    attachCookieToResponse(res, tokenUser);
     res.status(StatusCodes.OK).json({
         msg: `You are logged in. Welcome, ${username}`,
-        token,
     });
 }
 async function createUser(req: Request, res: Response) {

@@ -3,6 +3,7 @@ import Song from "../models/Song";
 import { StatusCodes } from "http-status-codes";
 import Playlist from "../models/Playlist";
 import { NotFoundError } from "../errors";
+import { JwtPayload } from "jsonwebtoken";
 
 async function getAllSongs(_req: Request, res: Response) {
     const songs = await Song.findAll();
@@ -41,8 +42,10 @@ async function deleteSong(req: Request, res: Response) {
 
 async function addSongToPlaylist(req: Request, res: Response) {
     const { songId, playlistId } = req.body;
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     const desiredPlaylist = await Playlist.findOne({
-        where: { id: playlistId },
+        where: { id: playlistId, userId: userId },
     });
     const desiredSong = await Song.findOne({
         where: { id: songId },

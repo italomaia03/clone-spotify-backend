@@ -16,7 +16,8 @@ async function getUserById(req: Request, res: Response) {
     res.status(StatusCodes.OK).json({ desiredUser });
 }
 async function updateUser(req: Request, res: Response) {
-    const { userId } = req.user as JwtPayload;
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     const desiredUser = { ...req.body };
     await User.update(desiredUser, {
         where: { id: userId },
@@ -24,7 +25,8 @@ async function updateUser(req: Request, res: Response) {
     res.status(StatusCodes.OK).json({ msg: "Updated" });
 }
 async function deleteUser(req: Request, res: Response) {
-    const { userId } = req.user as JwtPayload;
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     await Playlist.destroy({ where: { userId: userId } });
     await User.destroy({
         where: { id: userId },

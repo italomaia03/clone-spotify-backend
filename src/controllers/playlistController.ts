@@ -6,14 +6,16 @@ import { BadRequestError, NotFoundError } from "../errors";
 import Song from "../models/Song";
 
 async function getAllPlaylists(req: Request, res: Response) {
-    const { userId } = req.user as JwtPayload;
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     const playlists = await Playlist.findAll({ where: { userId: userId } });
     return res.status(StatusCodes.OK).json({ playlists: playlists });
 }
 
 async function createPlaylist(req: Request, res: Response) {
     const { name } = req.body;
-    const { userId } = req.user as JwtPayload;
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
 
     const newPlaylist = {
         name,
@@ -27,8 +29,10 @@ async function createPlaylist(req: Request, res: Response) {
 
 async function getPlaylistById(req: Request, res: Response) {
     const desiredId = Number(req.params.id);
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     const desiredPlaylist = await Playlist.findOne({
-        where: { id: desiredId },
+        where: { id: desiredId, userId: userId },
         attributes: ["name", "description"],
         include: {
             model: Song,
@@ -41,25 +45,40 @@ async function getPlaylistById(req: Request, res: Response) {
     res.status(StatusCodes.OK).json({ desiredPlaylist });
 }
 async function updatePlaylist(req: Request, res: Response) {
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     const desiredId = Number(req.params.id);
-    const desiredPlaylist = { ...req.body };
-    await Playlist.update(desiredPlaylist, {
-        where: { id: desiredId },
+    const updatedPlaylist = { ...req.body };
+    const desiredPlaylist = await Playlist.findOne({
+        where: { id: desiredId, userId: userId },
     });
+
+    if (!desiredPlaylist) {
+        throw new NotFoundError("Playlist not found.");
+    }
+
+    await Playlist.update(updatedPlaylist, {
+        where: { id: desiredId, userId: userId },
+    });
+
     res.status(StatusCodes.OK).json({ msg: "Updated" });
 }
 async function deletePlaylist(req: Request, res: Response) {
     const desiredId = Number(req.params.id);
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     await Playlist.destroy({
-        where: { id: desiredId },
+        where: { id: desiredId, userId: userId },
     });
     res.status(StatusCodes.OK).json({ msg: "Deleted" });
 }
 
 async function removeSongFromPlaylist(req: Request, res: Response) {
     const { playlistId, songId } = req.params;
+    const { payload } = req.user as JwtPayload;
+    const { userId } = payload;
     const desiredPlaylist = await Playlist.findOne({
-        where: { id: playlistId },
+        where: { id: playlistId, userId: userId },
     });
     const desiredSong = await Song.findOne({
         where: { id: songId },

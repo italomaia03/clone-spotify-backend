@@ -8,13 +8,12 @@ async function authMiddleware(
     _res: Response,
     next: NextFunction
 ) {
-    const authHeader = req.headers.authorization;
+    const token = req.cookies.token;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!token) {
         throw new UnauthenticatedError("No token provided");
     }
 
-    const token: string = authHeader!.split(" ")[1];
     try {
         const decodedToken = verifyToken(token);
         req.user = { ...(decodedToken as JwtPayload) };

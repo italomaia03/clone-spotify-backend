@@ -3,6 +3,7 @@ import "express-async-errors";
 import { userRouter } from "./routes/UserRouter";
 import { sequelize } from "./database/ConnectDB";
 import { auth } from "./routes/Auth";
+import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
 import { playlistRouter } from "./routes/PlaylistRouter";
 import { songRouter } from "./routes/SongRouter";
@@ -15,6 +16,7 @@ const app: Express = express();
 const connectDB = sequelize;
 // middlewares
 app.use(express.json());
+app.use(cookieParser());
 // app.use(express.static(path.resolve(__dirname, "public")));
 app.use("/api/v1/", auth);
 app.use("/api/v1/", userRouter);
