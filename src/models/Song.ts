@@ -5,6 +5,7 @@ import SongPlaylist from "./SongPlaylist";
 
 @Table({ tableName: "songs", timestamps: false })
 export default class Song extends Model<Song> {
+    // nome da música
     @Column({
         type: DataTypes.TEXT,
         allowNull: false,
@@ -19,6 +20,7 @@ export default class Song extends Model<Song> {
     })
     name!: string;
 
+    // duração da música
     @Column({
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -36,6 +38,7 @@ export default class Song extends Model<Song> {
     })
     duration!: number;
 
+    // autor da música
     @Column({
         type: DataTypes.TEXT,
         allowNull: false,
@@ -50,6 +53,7 @@ export default class Song extends Model<Song> {
     })
     author!: string;
 
+    // album da música
     @Column({
         type: DataTypes.TEXT,
         allowNull: false,
@@ -64,6 +68,7 @@ export default class Song extends Model<Song> {
     })
     album!: string;
 
+    // caminho para o arquivo da musica
     @Column({
         type: DataTypes.TEXT,
         allowNull: false,
@@ -78,6 +83,7 @@ export default class Song extends Model<Song> {
     })
     path!: string;
 
+    // relacionamento com a tabela de músicas
     @BelongsToMany(() => Playlist, () => SongPlaylist)
     playlists?: Array<Playlist & { SongPlaylist: SongPlaylist }>;
 }

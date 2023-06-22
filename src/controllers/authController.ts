@@ -29,8 +29,8 @@ async function loginUser(req: Request, res: Response) {
     });
 }
 async function createUser(req: Request, res: Response) {
-    const { email, password, username, day, month, year, gender } = req.body;
-    const date_of_birth = new Date(year, month - 1, day);
+    const { email, password, username, date_of_birth, gender } = req.body;
+    // const date_of_birth = new Date(year, month, day);
     const newUser = {
         email,
         password,
@@ -45,7 +45,7 @@ async function createUser(req: Request, res: Response) {
     });
 }
 
-async function logout(req: Request, res: Response) {
+async function logout(_req: Request, res: Response) {
     res.cookie("token", "logout", {
         httpOnly: true,
         expires: new Date(Date.now()),

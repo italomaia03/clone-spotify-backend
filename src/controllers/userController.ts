@@ -13,7 +13,7 @@ async function getUserById(req: Request, res: Response) {
     const desiredId = Number(req.params.id);
     const desiredUser = await User.findByPk(desiredId, { include: [Playlist] });
 
-    res.status(StatusCodes.OK).json({ desiredUser });
+    res.status(StatusCodes.OK).json({ msg: desiredUser });
 }
 async function updateUser(req: Request, res: Response) {
     const { payload } = req.user as JwtPayload;
@@ -22,7 +22,7 @@ async function updateUser(req: Request, res: Response) {
     await User.update(desiredUser, {
         where: { id: userId },
     });
-    res.status(StatusCodes.OK).json({ msg: "Updated" });
+    res.status(StatusCodes.OK).json({ msg: "User has been updated" });
 }
 async function deleteUser(req: Request, res: Response) {
     const { payload } = req.user as JwtPayload;
@@ -31,7 +31,7 @@ async function deleteUser(req: Request, res: Response) {
     await User.destroy({
         where: { id: userId },
     });
-    res.status(StatusCodes.OK).json({ msg: "Deleted" });
+    res.status(StatusCodes.OK).json({ msg: "User has been deleted" });
 }
 
 export { getAllUsers, updateUser, deleteUser, getUserById };

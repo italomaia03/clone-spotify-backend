@@ -5,10 +5,11 @@ import { sequelize } from "./database/ConnectDB";
 import { auth } from "./routes/Auth";
 import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
+import cors from "cors";
 import { playlistRouter } from "./routes/PlaylistRouter";
 import { songRouter } from "./routes/SongRouter";
 import { errorHandler } from "./middleware/errorHandler";
-// import path from "path";
+import path from "path";
 
 dotenv.config({});
 
@@ -17,12 +18,12 @@ const connectDB = sequelize;
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
-// app.use(express.static(path.resolve(__dirname, "public")));
+app.use(cors());
+app.use(express.static(path.join(__dirname, "public")));
 app.use("/api/v1/", auth);
 app.use("/api/v1/", userRouter);
 app.use("/api/v1/", songRouter);
 app.use("/api/v1/", playlistRouter);
-// app.use("/api/v1/user", playlistRouter);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
