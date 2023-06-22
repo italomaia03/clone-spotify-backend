@@ -33,7 +33,10 @@ async function updateUser(req: Request, res: Response) {
 async function deleteUser(req: Request, res: Response) {
     const { payload } = req.user as JwtPayload; // req.user vem da autenticação
     const { userId } = payload; // id do usuário
+
+    // apaga as playlists do usuário
     await Playlist.destroy({ where: { userId: userId } });
+    // apaga o usuário
     await User.destroy({
         where: { id: userId },
     });
