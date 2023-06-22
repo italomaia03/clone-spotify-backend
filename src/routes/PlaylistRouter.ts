@@ -11,6 +11,7 @@ import { authMiddleware } from "../middleware/authMiddleware";
 
 const playlistRouter: Router = Router();
 
+// todas as rotas de playlist requerem autenticação para serem acessadas
 playlistRouter
     .route("/playlists")
     .get(authMiddleware, getAllPlaylists)
