@@ -75,6 +75,19 @@ Then, run the following commands:
 Now, all the dependencies are in place and the app is ready to run.
 ## Running locally
 
+Before running the application, you should create a .env file with the following variables:
+
+```
+clone-spotify-backend
+    src/
+    .env
+```
+
+```
+JWT_SECRET=string of your choice
+JWT_LIFETIME=1d
+```
+
 After performing the instalation, run the following command to run the application:
 
 ```bash
@@ -84,7 +97,7 @@ After performing the instalation, run the following command to run the applicati
 or simply:
 
 ```bash
-  npm run serve
+  npm run dev
 ```
 By default, the application will run on PORT 3000. If you have another service running on this PORT, you can assign a free port to run the application. The commands are as follow:
 
