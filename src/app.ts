@@ -4,18 +4,17 @@ import { userRouter } from "./routes/UserRouter";
 import { sequelize } from "./database/ConnectDB";
 import { auth } from "./routes/Auth";
 import cookieParser from "cookie-parser";
-import * as dotenv from "dotenv";
 import cors from "cors";
 import { playlistRouter } from "./routes/PlaylistRouter";
 import { songRouter } from "./routes/SongRouter";
 import { errorHandler } from "./middleware/errorHandler";
 import path from "path";
-
-dotenv.config({});
+import * as dotenv from "dotenv";
 
 const app: Express = express();
 const connectDB = sequelize;
 // middlewares
+dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
@@ -26,8 +25,7 @@ app.use("/api/v1/", songRouter);
 app.use("/api/v1/", playlistRouter);
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-
+let PORT = process.env.PORT || 3000;
 async function start() {
     try {
         await connectDB.authenticate();
