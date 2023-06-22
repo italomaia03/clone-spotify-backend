@@ -84,7 +84,7 @@ After performing the instalation, run the following command to run the applicati
 or simply:
 
 ```bash
-  npm run dev
+  npm run serve
 ```
 By default, the application will run on PORT 3000. If you have another service running on this PORT, you can assign a free port to run the application. The commands are as follow:
 
