@@ -10,7 +10,7 @@ export function errorHandler(
     _next: NextFunction
 ) {
     if (err instanceof CustomApiError) {
-        return res.status(err.statusCode!).json({ message: err.message });
+        return res.status(err.statusCode!).json({ error: err.message });
     }
     if (err instanceof ValidationError) {
         return res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });

@@ -14,6 +14,7 @@ import SongPlaylist from "./SongPlaylist";
 
 @Table({ tableName: "playlists", timestamps: false })
 export default class Playlist extends Model<Playlist> {
+    @Default(`My playlist #${Math.floor(Math.random() * 100)}`)
     @Column({
         type: DataTypes.TEXT,
         allowNull: false,
@@ -26,14 +27,10 @@ export default class Playlist extends Model<Playlist> {
             },
         },
     })
-    name!: string;
+    name?: string;
 
     @Column({
-        type: DataTypes.NUMBER,
-        validate: {
-            notNull: false,
-            notEmpty: false,
-        },
+        type: DataTypes.TEXT,
     })
     description?: string;
 
