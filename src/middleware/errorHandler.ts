@@ -3,6 +3,8 @@ import { CustomApiError } from "../errors/CustomApiError";
 import { StatusCodes } from "http-status-codes";
 import { ValidationError } from "sequelize";
 
+// middleware que análisa o erro lançado e evia a resposta de acordo com o
+// código do erro
 export function errorHandler(
     err: any,
     _req: Request,

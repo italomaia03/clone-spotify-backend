@@ -31,6 +31,8 @@ const PORT = process.env.PORT || 3000;
 async function start() {
     try {
         await connectDB.authenticate();
+        // sincroniza as tabelas de acordo com os modelos definidos
+        // caso haja um modelo sem sua respectiva tabela, esta será criada
         await connectDB.sync();
         app.listen(PORT, () => console.log(`Server is up on port ${PORT}`));
     } catch (error) {
