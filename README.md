@@ -26,7 +26,7 @@ Project created using:
 ## Installation
 It is necessary to have SQLite3 previously installed in your machine.
 
-You can clone this repository.
+You can for this repository or download the zip file.
 
 Running the project requires the installation of NodeJS and NPM. You can get those in the following link:
 
@@ -34,40 +34,20 @@ Running the project requires the installation of NodeJS and NPM. You can get tho
 
 Give preference to the LTS versions available to your Operating System (Windows, Linux, MacOS, etc.).
 
-### Clonning the repository
+### Forking the repository
 
-Perfoming repository clonning requires to install Git in your machine. 
-
-Access the following link and read the instructions to perform Git installation in case you do not have it.
-
-```
-https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-```
-
-Get the SSH key below:
-
-```
-git@github.com:italomaia03/compass-challenge-week4.git
-```
+Fork the repository to your github and then clone it to your machine.
 
 Then, run the following commands:
 
 **Bash**
 ```bash
-  cd ~/[folder-of-choice]/
-
-  git clone git@github.com:italomaia03/clone-spotify-backend.git
-
   cd ~/[folder-of-choice]/clone-spotify-backend
 
   npm install
 ```
 **CMD/Powershell**
 ```powershell
-  cd C:\[folder-of-choice]
-
-  git clone git@github.com:italomaia03/clone-spotify-backend.git
-
   cd C:\[folder-of-choice]\clone-spotify-backend
 
   npm install
