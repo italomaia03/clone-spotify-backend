@@ -1,4 +1,3 @@
-
 # Backend for Spotify Clone
 
 This code consists of an activity performed in discipline of Software Projects II.
@@ -17,7 +16,7 @@ Project created using:
 * Express: 4.18.2
 * Typescript: 5.0.4
 * NodeJS: 18.16.0
-* Sequelize-Typescript: 2.1.5
+* Sequelize-Typescript: 2.1.6
 * Sqlite3: 5.1.6
 * Jsonwebtoken: 9.0.0
 
@@ -26,7 +25,7 @@ Project created using:
 ## Installation
 It is necessary to have SQLite3 previously installed in your machine.
 
-You can for this repository or download the zip file.
+You can clone this repository.
 
 Running the project requires the installation of NodeJS and NPM. You can get those in the following link:
 
@@ -34,20 +33,40 @@ Running the project requires the installation of NodeJS and NPM. You can get tho
 
 Give preference to the LTS versions available to your Operating System (Windows, Linux, MacOS, etc.).
 
-### Forking the repository
+### Clonning the repository
 
-Fork the repository to your github and then clone it to your machine.
+Perfoming repository clonning requires to install Git in your machine. 
+
+Access the following link and read the instructions to perform Git installation in case you do not have it.
+
+```
+https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+```
+
+Get the SSH key below:
+
+```
+git@github.com:italomaia03/compass-challenge-week4.git
+```
 
 Then, run the following commands:
 
 **Bash**
 ```bash
+  cd ~/[folder-of-choice]/
+
+  git clone git@github.com:italomaia03/clone-spotify-backend.git
+
   cd ~/[folder-of-choice]/clone-spotify-backend
 
   npm install
 ```
 **CMD/Powershell**
 ```powershell
+  cd C:\[folder-of-choice]
+
+  git clone git@github.com:italomaia03/clone-spotify-backend.git
+
   cd C:\[folder-of-choice]\clone-spotify-backend
 
   npm install
